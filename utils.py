@@ -1,3 +1,4 @@
+from ast import Try
 import requests
 from bs4 import BeautifulSoup
 
@@ -32,7 +33,10 @@ ZODIAC_NUMBERS = {
 }
 
 def get_horoscope(zodiac_sign: str):
-    res = requests.get(f'https://www.lavanguardia.com/horoscopo/signos-zodiaco-{zodiac_sign}/horoscopo-diario')
-    soup = BeautifulSoup(res.text, 'html.parser')
-    data = soup.select('#main > div > section.section-holder.sign-detail-section > div > div > div > p')
-    return data[0].text.strip()
+    try:            
+        res = requests.get(f'https://www.lavanguardia.com/horoscopo/signos-zodiaco-{zodiac_sign}/horoscopo-diario')
+        soup = BeautifulSoup(res.text, 'html.parser')
+        data = soup.select('#main > div > section.section-holder.sign-detail-section > div > div > div > p')
+        return data[0].text.strip()
+    except:
+        return 'No registrado'
